@@ -24,28 +24,28 @@ public class TimeEntryController {
         return TimeEntryrepository.save(newTimeEntry);
     }
     @GetMapping("/workdays/{id}/entries/{id2}")
-    TimeEntry one(@PathVariable Long id2) {
+    TimeEntry one(@PathVariable Long id) {
 
-        return TimeEntryrepository.findById(id2)
-                .orElseThrow(() -> new TimeEntryNotFoundException(id2));
+        return TimeEntryrepository.findById(id)
+                .orElseThrow(() -> new TimeEntryNotFoundException(id));
     }
     @PutMapping("/workdays/{id}/entries/{id2}")
-    TimeEntry replaceTimeEntry(@RequestBody  TimeEntry newTimeEntry, @PathVariable Long id2) {
+    TimeEntry replaceTimeEntry(@RequestBody  TimeEntry newTimeEntry, @PathVariable Long id) {
 
-        return TimeEntryrepository.findById(id2)
+        return TimeEntryrepository.findById(id)
                 .map(timeentry -> {
                     timeentry.setOpis(newTimeEntry.getOpis());
                     timeentry.setCzas(newTimeEntry.getCzas());
                     return TimeEntryrepository.save(timeentry);
                 })
                 .orElseGet(() -> {
-                    newTimeEntry.setId(id2);
+                    newTimeEntry.setId(id);
                     return TimeEntryrepository.save(newTimeEntry);
                 });
     }
     @DeleteMapping("/workdays/{id}/entries/{id2}")
-    void deleteTimeEntry(@PathVariable Long id2) {
-        TimeEntryrepository.deleteById(id2);
+    void deleteTimeEntry(@PathVariable Long id) {
+        TimeEntryrepository.deleteById(id);
     }
 
 
