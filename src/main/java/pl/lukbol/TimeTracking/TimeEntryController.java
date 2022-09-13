@@ -16,22 +16,21 @@ public class TimeEntryController {
     }
     @GetMapping("/workdays/{id}/entries")
     List<TimeEntry> k(@PathVariable Long id) {
-        Workday WorkDay = Workdayrepository.findById(id) //
+        Workday Workday = Workdayrepository.findById(id) //
                 .orElseThrow(() -> new WorkdayNotFoundException(id));
-        return WorkDay.getTimeEntry();
+        return  Workday.getTimeEntry();
 
     }
 
     @PostMapping("/workdays/{id}/entries")
     void e(@RequestBody TimeEntry entry, @PathVariable Long id) {
-        Workday WorkDay = Workdayrepository.findById(id)
+        Workday workDay = Workdayrepository.findById(id)
                 .orElseThrow(() -> new WorkdayNotFoundException(id));
-        WorkDay.getTimeEntry().add(new TimeEntry(entry.opis, entry.czas));
+     TimeEntry timeEntry = new TimeEntry(entry.opis, entry.czas);
+     timeEntry.setWorkday(workDay);
+     workDay.getTimeEntry().add(timeEntry);
+     Workdayrepository.save(workDay);
 
-        TimeEntry TimeEntry = Workdayrepository.findById(id).map(workday -> {
-            entry.setWorkday(workday);
-            return TimeEntryrepository.save(entry);
-        }).orElseThrow(() -> new WorkdayNotFoundException(id));
     }
 
 
