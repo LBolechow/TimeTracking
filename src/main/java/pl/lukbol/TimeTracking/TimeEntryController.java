@@ -15,7 +15,7 @@ public class TimeEntryController {
         this.TimeEntryrepository = TimeEntryrepository;
     }
     @GetMapping("/workdays/{id}/entries")
-    List<TimeEntry> b(@PathVariable Long id) {
+    List<TimeEntry> k(@PathVariable Long id) {
         Workday WorkDay = Workdayrepository.findById(id) //
                 .orElseThrow(() -> new WorkdayNotFoundException(id));
         return WorkDay.getTimeEntry();
