@@ -41,19 +41,6 @@ public class TimeTrackingApplicationTests {
 		Assertions.assertThat(controller).isNotNull();
 	}
 	@Test
-	public void GetWorkdays() throws Exception {
-		this.mvc
-				.perform(MockMvcRequestBuilders.get("/workdays"))
-				.andExpect(MockMvcResultMatchers.status().isOk());
-	}
-	@Test
-	public void GetEntriesFromWorkDay() throws Exception {
-		this.mvc
-				.perform(MockMvcRequestBuilders.get("/workdays/1/entries"))
-				.andExpect(MockMvcResultMatchers.status().isOk());
-	}
-	
-	@Test
 	public void AddWorkDay() throws Exception {
 		this.mvc.perform(post("/workdays")
 						.contentType(MediaType.APPLICATION_JSON)
@@ -62,6 +49,28 @@ public class TimeTrackingApplicationTests {
 				.andExpect(status().is2xxSuccessful());
 
 	}
+	@Test
+	public void GetWorkdays() throws Exception {
+		this.mvc
+				.perform(MockMvcRequestBuilders.get("/workdays"))
+				.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	@Test
+	public void UpdateWorkDay() throws Exception {
+		this.mvc.perform(put("/workdays/2")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content("{\"date\": \"2003\"}"))
+				.andDo(print())
+				.andExpect(status().is2xxSuccessful());
+	}
+	@Test
+	public void GetEntriesFromWorkDay() throws Exception {
+		this.mvc
+				.perform(MockMvcRequestBuilders.get("/workdays/1/entries"))
+				.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+
 	@Test
 	public void AddTimeEntry() throws Exception {
 		this.mvc.perform(post("/workdays/1/entries")
