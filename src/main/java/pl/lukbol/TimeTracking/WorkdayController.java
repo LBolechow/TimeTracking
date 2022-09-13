@@ -31,16 +31,16 @@ class WorkdayController {
                 .orElseThrow(() -> new WorkdayNotFoundException(id));
     }
     @PutMapping("/workdays/{id}")
-    Workday replaceWorkday(@RequestBody Workday newWorkday, @PathVariable Long id) {
+    Workday replaceEmployee(@RequestBody Workday newEmployee, @PathVariable Long id) {
 
         return Workdayrepository.findById(id)
-                .map(workday -> {
-                    workday.setDate(newWorkday.getDate());
-                    return Workdayrepository.save(workday);
+                .map(employee -> {
+                    employee.setDate(newEmployee.getDate());
+                    return Workdayrepository.save(employee);
                 })
                 .orElseGet(() -> {
-                    newWorkday.setId(id);
-                    return Workdayrepository.save(newWorkday);
+                    newEmployee.setId(id);
+                    return Workdayrepository.save(newEmployee);
                 });
     }
     @DeleteMapping("/workdays/{id}")
