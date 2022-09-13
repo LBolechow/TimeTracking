@@ -52,15 +52,7 @@ public class TimeTrackingApplicationTests {
 				.perform(MockMvcRequestBuilders.get("/workdays/1/entries"))
 				.andExpect(MockMvcResultMatchers.status().isOk());
 	}
-	@Test
-	public void UpdateWorkDay() throws Exception {
-		this.mvc.perform(put("/workdays/1")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content("{\"date\": \"2022\"}"))
-				.andDo(print())
-				.andExpect(status().is2xxSuccessful());
-
-	}
+	
 	@Test
 	public void AddWorkDay() throws Exception {
 		this.mvc.perform(post("/workdays")
