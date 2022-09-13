@@ -15,38 +15,27 @@ public class TimeEntryController {
         this.TimeEntryrepository = TimeEntryrepository;
     }
     @GetMapping("/workdays/{id}/entries")
-    List<TimeEntry> all() {
-        return TimeEntryrepository.findAll();
+    List<TimeEntry> b(@PathVariable Long id) {
+        Workday WorkDay = Workdayrepository.findById(id) //
+                .orElseThrow(() -> new WorkdayNotFoundException(id));
+        return WorkDay.getTimeEntry();
+
     }
 
     @PostMapping("/workdays/{id}/entries")
-    TimeEntry newTimeEntry(@RequestBody TimeEntry newTimeEntry) {
-        return TimeEntryrepository.save(newTimeEntry);
-    }
-    @GetMapping("/workdays/{id}/entries/{id2}")
-    TimeEntry one(@PathVariable Long id) {
+    void e(@RequestBody TimeEntry entry, @PathVariable Long id) {
+        Workday WorkDay = Workdayrepository.findById(id)
+                .orElseThrow(() -> new WorkdayNotFoundException(id));
+        WorkDay.getTimeEntry().add(new TimeEntry(entry.opis, entry.czas));
 
-        return TimeEntryrepository.findById(id)
-                .orElseThrow(() -> new TimeEntryNotFoundException(id));
+        TimeEntry TimeEntry = Workdayrepository.findById(id).map(workday -> {
+            entry.setWorkday(workday);
+            return TimeEntryrepository.save(entry);
+        }).orElseThrow(() -> new WorkdayNotFoundException(id));
     }
-    @PutMapping("/workdays/{id}/entries/{id2}")
-    TimeEntry replaceTimeEntry(@RequestBody  TimeEntry newTimeEntry, @PathVariable Long id) {
 
-        return TimeEntryrepository.findById(id)
-                .map(timeentry -> {
-                    timeentry.setOpis(newTimeEntry.getOpis());
-                    timeentry.setCzas(newTimeEntry.getCzas());
-                    return TimeEntryrepository.save(timeentry);
-                })
-                .orElseGet(() -> {
-                    newTimeEntry.setId(id);
-                    return TimeEntryrepository.save(newTimeEntry);
-                });
-    }
-    @DeleteMapping("/workdays/{id}/entries/{id2}")
-    void deleteTimeEntry(@PathVariable Long id) {
-        TimeEntryrepository.deleteById(id);
-    }
+
+
 
 
 }
