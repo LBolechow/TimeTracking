@@ -6,8 +6,8 @@ import javax.persistence.*;
 @Entity
 public class TimeEntry {
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long Id;
-    private String opis;
-    private int czas;
+   public String opis;
+    public int czas;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="workday_id")
 
