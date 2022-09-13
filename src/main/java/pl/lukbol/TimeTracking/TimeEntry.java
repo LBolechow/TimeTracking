@@ -1,14 +1,16 @@
 package pl.lukbol.TimeTracking;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 public class TimeEntry {
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long Id;
-   public String opis;
+    public String opis;
     public int czas;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name="workday_id")
 
     private Workday workday;
@@ -31,11 +33,6 @@ public class TimeEntry {
     public int getCzas(){return this.czas;}
 
     public void setCzas(int czas) {this.czas=czas;}
-
-    public Workday getWorkday() {
-        return this.workday;
-    }
-
     public void setWorkday(Workday workday) {
         this.workday = workday;
     }
