@@ -39,7 +39,7 @@ public class TimeTrackingApplicationTests {
 	public void AddWorkDay() throws Exception {
 		this.mvc.perform(post("/workdays")
 						.contentType(MediaType.APPLICATION_JSON)
-						.content("{\"date\": \"2023\"}"))
+						.content("{\"date\": \"2022\"}"))
 				.andDo(print())
 				.andExpect(status().is2xxSuccessful());
 
