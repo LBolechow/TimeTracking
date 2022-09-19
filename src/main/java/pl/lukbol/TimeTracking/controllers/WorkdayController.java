@@ -17,10 +17,10 @@ public class WorkdayController {
 
 
     @GetMapping("/workdays")
-    List<Workday> displayAll() {       return workdayService.displayAll();   }
+    List<Workday> displayAll() {return workdayService.displayAll();   }
 
     @PostMapping("/workdays")
-    Workday AddNewWorkday(@RequestBody Workday newWorkday) {    return workdayService.AddNewWorkday(newWorkday);  }
+    Workday AddNewWorkday(@RequestBody Workday newWorkday) {return workdayService.AddNewWorkday(newWorkday);  }
 
     @GetMapping("/workdays/{id}")
     Workday GetWorkdayById(@PathVariable Long id) {return workdayService.GetWorkdayById(id);}
@@ -28,7 +28,8 @@ public class WorkdayController {
     @PutMapping("/workdays/{id}")
     Workday ReplaceWorkdayById(@RequestBody Workday newWorkday, @PathVariable Long id) {return workdayService.ReplaceWorkdayById(newWorkday, id);}
 
-    @DeleteMapping("/workdays/{id}") void DeleteWorkdayById(@PathVariable Long id) { workdayService.DeleteWorkdayById(id);}
+    @DeleteMapping("/workdays/{id}") 
+    void DeleteWorkdayById(@PathVariable Long id) { workdayService.DeleteWorkdayById(id);}
 
 
 }
