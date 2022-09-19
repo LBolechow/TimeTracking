@@ -17,14 +17,10 @@ public class WorkdayController {
 
 
     @GetMapping("/workdays")
-    List<Workday> displayAll() {
-        return workdayService.displayAll();
-    }
+    List<Workday> displayAll() {       return workdayService.displayAll();   }
 
     @PostMapping("/workdays")
-    Workday AddNewWorkday(@RequestBody Workday newWorkday) {
-        return workdayService.AddNewWorkday(newWorkday);
-    }
+    Workday AddNewWorkday(@RequestBody Workday newWorkday) {    return workdayService.AddNewWorkday(newWorkday);  }
 
     @GetMapping("/workdays/{id}")
     Workday GetWorkdayById(@PathVariable Long id) {return workdayService.GetWorkdayById(id);}
