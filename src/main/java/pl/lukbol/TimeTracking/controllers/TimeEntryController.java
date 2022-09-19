@@ -17,16 +17,10 @@ public class TimeEntryController {
 
 
     @GetMapping("/workdays/{id}/entries")
-    List<TimeEntry> getEntries(@PathVariable Long id) {
-        return  timeEntryService.getEntries(id);
-
-    }
+    List<TimeEntry> getEntries(@PathVariable Long id) {return  timeEntryService.getEntries(id);}
 
     @PostMapping("/workdays/{id}/entries")
-    void postEntries(@RequestBody TimeEntry entry, @PathVariable Long id) {
-   timeEntryService.postEntries(entry, id);
-
-    }
+    void postEntries(@RequestBody TimeEntry entry, @PathVariable Long id) {timeEntryService.postEntries(entry, id);}
 
 
 
