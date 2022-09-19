@@ -1,59 +1,38 @@
 package pl.lukbol.TimeTracking.controllers;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.lukbol.TimeTracking.repositories.TimeEntryRepository;
+import pl.lukbol.TimeTracking.service.WorkdayService;
 import pl.lukbol.TimeTracking.models.Workday;
-import pl.lukbol.TimeTracking.exceptions.WorkdayNotFoundException;
-import pl.lukbol.TimeTracking.repositories.WorkdayRepository;
+
 
 import java.util.List;
 
 @RestController
 public class WorkdayController {
 
-    public final WorkdayRepository workdayRepository;
-    public final TimeEntryRepository entryRepository;
+    @Autowired
+  private WorkdayService workdayService;
 
-    WorkdayController(WorkdayRepository workdayRepository, TimeEntryRepository entryRepository) {
-        this.workdayRepository = workdayRepository;
-        this.entryRepository = entryRepository;
-    }
+
     @GetMapping("/workdays")
-    List<Workday> all() {
-        return workdayRepository.findAll();
+    List<Workday> displayAll() {
+        return workdayService.displayAll();
     }
 
     @PostMapping("/workdays")
     Workday AddNewWorkday(@RequestBody Workday newWorkday) {
-        return workdayRepository.save(newWorkday);
+        return workdayService.AddNewWorkday(newWorkday);
     }
 
     @GetMapping("/workdays/{id}")
-    Workday GetWorkdayById(@PathVariable Long id) {
-
-        return workdayRepository.findById(id)
-                .orElseThrow(() -> new WorkdayNotFoundException(id));
-    }
+    Workday GetWorkdayById(@PathVariable Long id) {return workdayService.GetWorkdayById(id);}
 
     @PutMapping("/workdays/{id}")
-    Workday ReplaceWorkdayById(@RequestBody Workday newWorkday, @PathVariable Long id) {
+    Workday ReplaceWorkdayById(@RequestBody Workday newWorkday, @PathVariable Long id) {return workdayService.ReplaceWorkdayById(newWorkday, id);}
 
-        return workdayRepository.findById(id)
-                .map(workDay -> {
-                    workDay .setDate(newWorkday.getDate());
-                    return workdayRepository.save(workDay );
-                })
-                .orElseGet(() -> {
-                    newWorkday.setId(id);
-                    return workdayRepository.save(newWorkday);
-                });
-    }
-
-    @DeleteMapping("/workdays/{id}")
-    void DeleteWorkdayById(@PathVariable Long id) {
-        workdayRepository.deleteById(id);
-    }
+    @DeleteMapping("/workdays/{id}") void DeleteWorkdayById(@PathVariable Long id) { workdayService.DeleteWorkdayById(id);}
 
 
 }
